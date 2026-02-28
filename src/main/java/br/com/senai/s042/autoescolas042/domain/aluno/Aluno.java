@@ -1,5 +1,6 @@
 package br.com.senai.s042.autoescolas042.domain.aluno;
 
+import br.com.senai.s042.autoescolas042.domain.endereco.Endereco;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
