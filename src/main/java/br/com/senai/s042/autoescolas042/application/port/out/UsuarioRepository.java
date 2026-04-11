@@ -9,7 +9,10 @@ import java.util.Optional;
 
 public interface UsuarioRepository {
     UserDetails findByLogin(String login);
+
     Page<Usuario> findAllByAtivoTrue(Pageable paginacao);
+
     Usuario save(Usuario usuario);
+
     Optional<Usuario> findById(Long id);
 }

@@ -5,6 +5,5 @@ import br.com.senai.s042.autoescolas042.adapter.in.viacep.response.DadosDetalham
 import org.springframework.http.ResponseEntity;
 
 public interface ViaCEPPortIn {
-    ResponseEntity<DadosDetalhamentoCEP> consultarCEP(DadosConsultaCEP cep);
-
+    ResponseEntity<DadosDetalhamentoCEP> consultarCEP(DadosConsultaCEP dados);
 }

@@ -8,6 +8,7 @@ import br.com.senai.s042.autoescolas042.adapter.in.controller.response.usuario.D
 import br.com.senai.s042.autoescolas042.adapter.in.controller.response.usuario.DadosSuccess;
 import br.com.senai.s042.autoescolas042.application.core.usecase.UsuarioService;
 import br.com.senai.s042.autoescolas042.application.port.in.ModelDomainController;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +21,7 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("/usuarios")
+@SecurityRequirement(name = "bearer-key")
 public class UsuarioController implements ModelDomainController<
         DadosCadastroUsuario,
         DadosListagemUsuario,

@@ -1,8 +1,8 @@
 package br.com.senai.s042.autoescolas042.adapter.in.controller;
 
 import br.com.senai.s042.autoescolas042.adapter.in.controller.request.usuario.DadosAutenticacao;
-import br.com.senai.s042.autoescolas042.application.core.usecase.LoginService;
 import br.com.senai.s042.autoescolas042.adapter.in.controller.response.usuario.DadosTokenJWT;
+import br.com.senai.s042.autoescolas042.application.core.usecase.LoginService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

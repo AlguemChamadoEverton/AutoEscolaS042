@@ -6,6 +6,8 @@ import java.time.LocalDateTime;
 
 public interface InstrucaoRepository {
     Boolean existsByAlunoIdAndDataBetween(Long id, LocalDateTime inicioExpediente, LocalDateTime fimExpediente);
+
     Boolean existsByInstrutorIdAndData(Long id, LocalDateTime data);
+
     Instrucao save(Instrucao instrucao);
 }

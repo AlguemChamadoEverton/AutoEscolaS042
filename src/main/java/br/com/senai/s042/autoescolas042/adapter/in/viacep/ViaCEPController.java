@@ -4,8 +4,10 @@ import br.com.senai.s042.autoescolas042.adapter.in.viacep.request.DadosConsultaC
 import br.com.senai.s042.autoescolas042.adapter.in.viacep.response.DadosDetalhamentoCEP;
 import br.com.senai.s042.autoescolas042.application.core.service.ViaCEPService;
 import br.com.senai.s042.autoescolas042.application.port.in.ViaCEPPortIn;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,9 +20,9 @@ public class ViaCEPController implements ViaCEPPortIn {
         this.service = service;
     }
 
-    @PostMapping
     @Override
-    public ResponseEntity<DadosDetalhamentoCEP> consultarCEP(DadosConsultaCEP dados) {
+    @PostMapping
+    public ResponseEntity<DadosDetalhamentoCEP> consultarCEP(@RequestBody @Valid DadosConsultaCEP dados) {
         return ResponseEntity.ok(service.consultar(dados));
     }
 }

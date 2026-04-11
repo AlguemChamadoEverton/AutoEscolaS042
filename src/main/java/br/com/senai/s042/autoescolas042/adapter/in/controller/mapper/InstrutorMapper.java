@@ -3,7 +3,7 @@ package br.com.senai.s042.autoescolas042.adapter.in.controller.mapper;
 import br.com.senai.s042.autoescolas042.adapter.in.controller.request.instrutor.DadosCadastroInstrutor;
 import br.com.senai.s042.autoescolas042.adapter.in.controller.response.instrutor.DadosDetalhamentoInstrutor;
 import br.com.senai.s042.autoescolas042.adapter.in.controller.response.instrutor.DadosListagemInstrutor;
-import br.com.senai.s042.autoescolas042.application.core.domain.Instrutor;
+import br.com.senai.s042.autoescolas042.application.core.domain.model.Instrutor;
 import org.springframework.stereotype.Component;
 
 @Component

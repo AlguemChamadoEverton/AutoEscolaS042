@@ -19,7 +19,7 @@ public class ValidadorHorarioAntecedencia implements ValidadorAgendamento {
 
         Long antecedencia = Duration.between(agora, horaAgendamento).toMinutes();
 
-        if(antecedencia < 30) {
+        if (antecedencia < 30) {
             erros.add("Instrução deve ser agendada com antecedência mínima de 30 minutos!");
         }
         return erros;

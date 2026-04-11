@@ -8,9 +8,14 @@ import java.util.Optional;
 
 public interface AlunoRepository {
     Page<Aluno> findAllByAtivoTrue(Pageable paginacao);
+
     Boolean findByIdAndAtivoTrue(Long id);
+
     Aluno save(Aluno aluno);
+
     Optional<Aluno> findById(Long id);
+
     boolean existsById(Long id);
+
     Aluno getReferenceById(Long aLong);
 }

@@ -10,10 +10,16 @@ import java.util.Optional;
 
 public interface InstrutorRepository {
     Page<Instrutor> findAllByAtivoTrue(Pageable paginacao);
+
     Instrutor escolherInstrutorAleatorioDisponivel(Especialidade especialidade, LocalDateTime data);
+
     Boolean findAtivoById(Long id);
+
     Instrutor save(Instrutor instrutor);
+
     Optional<Instrutor> findById(Long id);
+
     Instrutor getReferenceById(Long id);
+
     boolean existsById(Long aLong);
 }

@@ -5,16 +5,17 @@ import br.com.senai.s042.autoescolas042.adapter.in.controller.request.instrucao.
 import br.com.senai.s042.autoescolas042.adapter.in.controller.response.instrucao.DadosDetalhamentoInstrucao;
 import br.com.senai.s042.autoescolas042.application.core.domain.model.Aluno;
 import br.com.senai.s042.autoescolas042.application.core.domain.model.Instrucao;
-import br.com.senai.s042.autoescolas042.application.port.out.InstrucaoRepository;
-import br.com.senai.s042.autoescolas042.exception.types.aluno.AlunoNaoExisteException;
-import br.com.senai.s042.autoescolas042.application.port.out.AlunoRepository;
-import br.com.senai.s042.autoescolas042.exception.types.instrucao.ValidacaoException;
-import br.com.senai.s042.autoescolas042.application.core.validation.instrucao.interfaces.ValidadorAgendamento;
 import br.com.senai.s042.autoescolas042.application.core.domain.model.Instrutor;
+import br.com.senai.s042.autoescolas042.application.core.service.EmailNotificacaoService;
+import br.com.senai.s042.autoescolas042.application.core.validation.instrucao.interfaces.ValidadorAgendamento;
+import br.com.senai.s042.autoescolas042.application.port.out.AlunoRepository;
+import br.com.senai.s042.autoescolas042.application.port.out.InstrucaoRepository;
+import br.com.senai.s042.autoescolas042.application.port.out.InstrutorRepository;
+import br.com.senai.s042.autoescolas042.exception.types.aluno.AlunoNaoExisteException;
 import br.com.senai.s042.autoescolas042.exception.types.instrucao.EspecialidadeNaoInformada;
 import br.com.senai.s042.autoescolas042.exception.types.instrucao.InstrutorIndisponivelException;
+import br.com.senai.s042.autoescolas042.exception.types.instrucao.ValidacaoException;
 import br.com.senai.s042.autoescolas042.exception.types.instrutor.InstrutorNaoExisteException;
-import br.com.senai.s042.autoescolas042.application.port.out.InstrutorRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -28,28 +29,31 @@ public class AgendaDeInstrucoes {
     private final InstrutorRepository instrutorRepository;
     private final InstrucaoMapper mapper;
     private final List<ValidadorAgendamento> validadores;
+    private final EmailNotificacaoService emailNotificacaoService;
 
     public AgendaDeInstrucoes(
             InstrucaoRepository repository,
             AlunoRepository alunoRepository,
             InstrutorRepository instrutorRepository,
             InstrucaoMapper mapper,
-            List<ValidadorAgendamento> validadores) {
+            List<ValidadorAgendamento> validadores,
+            EmailNotificacaoService emailNotificacaoService) {
         this.repository = repository;
         this.alunoRepository = alunoRepository;
         this.instrutorRepository = instrutorRepository;
         this.mapper = mapper;
         this.validadores = validadores;
+        this.emailNotificacaoService = emailNotificacaoService;
     }
 
     @Transactional
     public DadosDetalhamentoInstrucao agendarInstrucao(DadosAgendamentoInstrucao dados) {
         List<String> erros = new ArrayList<>();
 
-        if(!alunoRepository.existsById(dados.idAluno())) {
+        if (!alunoRepository.existsById(dados.idAluno())) {
             throw new AlunoNaoExisteException("ID do aluno informado não existe!");
         }
-        if(dados.idInstrutor() != null && !instrutorRepository.existsById(dados.idInstrutor())) {
+        if (dados.idInstrutor() != null && !instrutorRepository.existsById(dados.idInstrutor())) {
             throw new InstrutorNaoExisteException("ID do instrutor informado não existe!");
         }
 
@@ -57,14 +61,14 @@ public class AgendaDeInstrucoes {
 
         validadores.forEach(v -> erros.addAll(v.validar(dados)));
 
-        if(!erros.isEmpty()) {
+        if (!erros.isEmpty()) {
             throw new ValidacaoException(erros);
         }
 
         Aluno aluno = alunoRepository.getReferenceById(dados.idAluno());
         Instrutor instrutor = escolherInstrutor(dados);
 
-        if(instrutor == null) {
+        if (instrutor == null) {
             throw new InstrutorIndisponivelException("Não há instrutor disponível para a data e hora escolhida!");
         }
 
@@ -75,14 +79,15 @@ public class AgendaDeInstrucoes {
                 dados.data()
         );
         Instrucao salvo = repository.save(instrucao);
+        emailNotificacaoService.enviarNotificacaoInstrucao(salvo,"agendada");
         return mapper.toDetailsDTO(salvo);
     }
 
     private Instrutor escolherInstrutor(DadosAgendamentoInstrucao dados) {
-        if(dados.idInstrutor() != null) {
+        if (dados.idInstrutor() != null) {
             return instrutorRepository.getReferenceById(dados.idInstrutor());
         }
-        if(dados.especialidade() == null) {
+        if (dados.especialidade() == null) {
             throw new EspecialidadeNaoInformada("Especialidade é obrigatória quando o instrutor não for informado!");
         }
         return instrutorRepository.escolherInstrutorAleatorioDisponivel(dados.especialidade(), dados.data());

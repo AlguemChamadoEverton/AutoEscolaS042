@@ -14,8 +14,9 @@ import java.io.IOException;
 
 @Service
 public class ViaCEPService {
-    public DadosDetalhamentoCEP consultar(DadosConsultaCEP cep) {
-        String url = "https://viacep.com.br/ws" + dados.cep() + "/json/";
+    public DadosDetalhamentoCEP consultar(DadosConsultaCEP dados) {
+        String url = "https://viacep.com.br/ws/" + dados.cep() + "/json/";
+
         try {
             String jsonResponse = Request.Get(url)
                     .connectTimeout(10000)
@@ -25,10 +26,12 @@ public class ViaCEPService {
                     .asString();
 
             JsonObject jsonObject = JsonParser.parseString(jsonResponse).getAsJsonObject();
-            if(jsonObject.has("erro") && jsonObject.get("erro").getAsBoolean()) {
+            if (jsonObject.has("erro") && jsonObject.get("erro").getAsBoolean()) {
                 throw new CEPNotFoundException("Este cep não existe!");
             }
+
             Gson gson = new Gson();
+
             return gson.fromJson(jsonObject, DadosDetalhamentoCEP.class);
         } catch (IOException e) {
             System.out.println("Erro de I/O: " + e.getMessage());

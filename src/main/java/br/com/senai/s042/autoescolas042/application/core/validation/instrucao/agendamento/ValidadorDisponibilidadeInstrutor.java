@@ -1,8 +1,8 @@
 package br.com.senai.s042.autoescolas042.application.core.validation.instrucao.agendamento;
 
 import br.com.senai.s042.autoescolas042.adapter.in.controller.request.instrucao.DadosAgendamentoInstrucao;
-import br.com.senai.s042.autoescolas042.application.port.out.InstrucaoRepository;
 import br.com.senai.s042.autoescolas042.application.core.validation.instrucao.interfaces.ValidadorAgendamento;
+import br.com.senai.s042.autoescolas042.application.port.out.InstrucaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,7 +22,7 @@ public class ValidadorDisponibilidadeInstrutor implements ValidadorAgendamento {
                 dados.data()
         );
 
-        if(instrutorOcupado) {
+        if (instrutorOcupado) {
             erros.add("Instrutor ocupado na data e horário solicitados!");
         }
         return erros;

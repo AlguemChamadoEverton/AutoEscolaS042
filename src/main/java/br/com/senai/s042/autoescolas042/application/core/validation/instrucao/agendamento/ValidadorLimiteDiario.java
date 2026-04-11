@@ -1,8 +1,8 @@
 package br.com.senai.s042.autoescolas042.application.core.validation.instrucao.agendamento;
 
 import br.com.senai.s042.autoescolas042.adapter.in.controller.request.instrucao.DadosAgendamentoInstrucao;
-import br.com.senai.s042.autoescolas042.application.port.out.InstrucaoRepository;
 import br.com.senai.s042.autoescolas042.application.core.validation.instrucao.interfaces.ValidadorAgendamento;
+import br.com.senai.s042.autoescolas042.application.port.out.InstrucaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,7 +26,7 @@ public class ValidadorLimiteDiario implements ValidadorAgendamento {
                 inicioExpediente,
                 fimExpediente);
 
-        if(reincidenciaDiaria) {
+        if (reincidenciaDiaria) {
             erros.add("Permitido o agendamento de apenas uma instrução diária por aluno!");
         }
         return erros;

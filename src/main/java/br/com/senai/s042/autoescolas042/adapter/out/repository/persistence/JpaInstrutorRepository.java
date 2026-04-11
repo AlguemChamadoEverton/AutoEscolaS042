@@ -15,27 +15,27 @@ public interface JpaInstrutorRepository extends JpaRepository<InstrutorEntity, L
     Page<InstrutorEntity> findAllByAtivoTrue(Pageable paginacao);
 
     @Query("""
-                SELECT i FROM Instrutor i
-                WHERE
-                i.ativo = TRUE
-                AND
-                i.especialidade = :especialidade
-                AND
-                i.id NOT IN(
-                    SELECT a.instrutor.id FROM Instrucao a
-                    WHERE
-                    a.data = :data
-                )
-                ORDER BY rand()
-                LIMIT 1
-    """)
+                        SELECT i FROM Instrutor i
+                        WHERE
+                        i.ativo = TRUE
+                        AND
+                        i.especialidade = :especialidade
+                        AND
+                        i.id NOT IN(
+                            SELECT a.instrutor.id FROM Instrucao a
+                            WHERE
+                            a.data = :data
+                        )
+                        ORDER BY rand()
+                        LIMIT 1
+            """)
     InstrutorEntity escolherInstrutorAleatorioDisponivel(Especialidade especialidade, LocalDateTime data);
 
     @Query("""
-        SELECT i.ativo
-        FROM Instrutor i
-        WHERE
-        i.id = :id
-    """)
+                SELECT i.ativo
+                FROM Instrutor i
+                WHERE
+                i.id = :id
+            """)
     Boolean findAtivoById(Long id);
 }

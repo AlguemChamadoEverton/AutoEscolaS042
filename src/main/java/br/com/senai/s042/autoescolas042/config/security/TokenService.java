@@ -15,9 +15,9 @@ import java.time.ZoneOffset;
 @Service
 public class TokenService {
 
+    private final String ISSUER = "API Auto Escola S042";
     @Value("${api.security.token.secret}")
     private String secret;
-    private final String ISSUER = "API Auto Escola S042";
 
     public String gerarToken(Usuario usuario) {
         try {
@@ -27,7 +27,7 @@ public class TokenService {
                     .withSubject(usuario.getLogin())
                     .withExpiresAt(dataExpiracao())
                     .sign(algorithm);
-        } catch (JWTCreationException exception){
+        } catch (JWTCreationException exception) {
             throw new RuntimeException("Erro ao gerar o Token JWT!");
         }
     }
@@ -40,7 +40,7 @@ public class TokenService {
                     .build()
                     .verify(token)
                     .getSubject();
-        } catch (JWTVerificationException exception){
+        } catch (JWTVerificationException exception) {
             throw new RuntimeException("Token inválido ou expirado!");
         }
     }

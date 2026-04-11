@@ -12,7 +12,8 @@ public class Endereco {
     private String uf;
     private String cep;
 
-    public Endereco() {}
+    public Endereco() {
+    }
 
     public Endereco(
             String logradouro,
@@ -60,25 +61,25 @@ public class Endereco {
     }
 
     public void atualizarInformacoes(Endereco endereco) {
-        if(endereco.logradouro != null) {
+        if (endereco.logradouro != null) {
             this.logradouro = endereco.logradouro;
         }
-        if(endereco.numero != null) {
+        if (endereco.numero != null) {
             this.numero = endereco.numero;
         }
-        if(endereco.complemento != null) {
+        if (endereco.complemento != null) {
             this.complemento = endereco.complemento;
         }
-        if(endereco.bairro != null) {
+        if (endereco.bairro != null) {
             this.bairro = endereco.bairro;
         }
-        if(endereco.cidade != null) {
+        if (endereco.cidade != null) {
             this.cidade = endereco.cidade;
         }
-        if(endereco.uf != null) {
+        if (endereco.uf != null) {
             this.uf = endereco.uf;
         }
-        if(endereco.cep != null) {
+        if (endereco.cep != null) {
             this.cep = endereco.cep;
         }
     }

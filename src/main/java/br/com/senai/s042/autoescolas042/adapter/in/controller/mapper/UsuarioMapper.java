@@ -3,7 +3,7 @@ package br.com.senai.s042.autoescolas042.adapter.in.controller.mapper;
 import br.com.senai.s042.autoescolas042.adapter.in.controller.request.usuario.DadosCadastroUsuario;
 import br.com.senai.s042.autoescolas042.adapter.in.controller.response.usuario.DadosDetalhamentoUsuario;
 import br.com.senai.s042.autoescolas042.adapter.in.controller.response.usuario.DadosListagemUsuario;
-import br.com.senai.s042.autoescolas042.application.core.domain.Usuario;
+import br.com.senai.s042.autoescolas042.application.core.domain.model.Usuario;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
